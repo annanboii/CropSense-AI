@@ -1,0 +1,12 @@
+{
+  "name": "CropSense AI",
+  "description": "Software-only smart agriculture platform for farmers powered by smartphone image diagnostics, real weather data, and agronomic intelligence.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
+
