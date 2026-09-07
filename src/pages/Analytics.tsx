@@ -62,7 +62,7 @@ export const Analytics: React.FC = () => {
     formatArea,
     formatWaterVolume,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, translateText } = useTranslation();
 
   const [selectedScanId, setSelectedScanId] = useState<string | null>(null);
 
@@ -327,14 +327,14 @@ export const Analytics: React.FC = () => {
                           {dateFormatted}
                         </td>
                         <td className="py-3 px-3 font-bold text-slate-900 whitespace-nowrap">
-                          {scan.cropType}
+                          {translateText(scan.cropType)}
                         </td>
                         <td className="py-3 px-3 font-semibold text-slate-800">
-                          {scan.possibleCondition || scan.diagnosis}
+                          {translateText(scan.possibleCondition || scan.diagnosis)}
                         </td>
                         <td className="py-3 px-3 text-slate-600">
                           <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 font-medium">
-                            {scan.pathogenType || "Physiological"}
+                            {translateText(scan.pathogenType || "Physiological")}
                           </span>
                         </td>
                         <td className="py-3 px-3 whitespace-nowrap">
@@ -347,7 +347,7 @@ export const Analytics: React.FC = () => {
                                 : "bg-emerald-100 text-emerald-800"
                             }`}
                           >
-                            {scan.severity || "Nominal"}
+                            {translateText(scan.severity || "Nominal")}
                           </span>
                         </td>
                         <td className="py-3 px-3 whitespace-nowrap">
@@ -389,7 +389,7 @@ export const Analytics: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-bold text-slate-900 text-sm">
-                      {t("scanner.diagnosisResult", "Scan Inspection")}: {selectedScan.cropType}
+                      {t("scanner.diagnosisResult", "Scan Inspection")}: {translateText(selectedScan.cropType)}
                     </span>
                     <ProvenanceBadge source="DEMO AI ASSESSMENT" size="sm" />
                   </div>
@@ -408,7 +408,7 @@ export const Analytics: React.FC = () => {
                     </span>
                     <ul className="list-disc list-inside text-slate-600 space-y-1">
                       {(selectedScan.visibleSymptoms || selectedScan.symptoms || ["Chlorotic lesions detected"]).map((sym, idx) => (
-                        <li key={idx}>{sym}</li>
+                        <li key={idx}>{translateText(sym)}</li>
                       ))}
                     </ul>
                   </div>
@@ -418,11 +418,11 @@ export const Analytics: React.FC = () => {
                       {t("scanner.treatmentPlan", "Recommended Agronomic Action")}
                     </span>
                     <p className="text-slate-600 leading-relaxed">
-                      {selectedScan.recommendedNextSteps?.[0] || "Prune lower infected foliage and apply protective copper or bio-fungicide treatment."}
+                      {translateText(selectedScan.recommendedNextSteps?.[0] || "Prune lower infected foliage and apply protective copper or bio-fungicide treatment.")}
                     </p>
                     {selectedScan.limitations && (
                       <p className="text-[11px] text-slate-400 italic mt-1">
-                        Limitations: {selectedScan.limitations}
+                        {t("scanner.limitationsNote", "Limitations")}: {translateText(selectedScan.limitations)}
                       </p>
                     )}
                   </div>
@@ -662,13 +662,13 @@ export const Analytics: React.FC = () => {
                   {irrigationRecords.map((rec) => (
                     <tr key={rec.id} className="hover:bg-slate-50/80 transition-colors">
                       <td className="py-2.5 px-3 font-mono text-slate-600 whitespace-nowrap">{rec.date}</td>
-                      <td className="py-2.5 px-3 font-bold text-slate-900 whitespace-nowrap">{rec.cropName}</td>
-                      <td className="py-2.5 px-3 text-slate-700 whitespace-nowrap">{rec.fieldName}</td>
+                      <td className="py-2.5 px-3 font-bold text-slate-900 whitespace-nowrap">{translateText(rec.cropName)}</td>
+                      <td className="py-2.5 px-3 text-slate-700 whitespace-nowrap">{translateText(rec.fieldName)}</td>
                       <td className="py-2.5 px-3 font-mono font-bold text-cyan-700">{rec.depthMm} mm</td>
                       <td className="py-2.5 px-3 font-mono text-slate-700">
                         {rec.volumeGallons ? `${rec.volumeGallons.toLocaleString()} gal` : `${rec.volumeLiters?.toLocaleString()} L`}
                       </td>
-                      <td className="py-2.5 px-3 text-slate-600 max-w-xs truncate">{rec.notes || "Standard scheduled cycle"}</td>
+                      <td className="py-2.5 px-3 text-slate-600 max-w-xs truncate">{translateText(rec.notes || "Standard scheduled cycle")}</td>
                     </tr>
                   ))}
                 </tbody>

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useMemo, useCall
 import { Language, LanguageOption } from "./types";
 import { en } from "./locales/en";
 import { ur } from "./locales/ur";
+import { translateTextToUrdu } from "./agriculturalDictionary";
 
 export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   {
@@ -26,6 +27,7 @@ interface LanguageContextType {
   dir: "ltr" | "rtl";
   isRTL: boolean;
   t: (path: string, defaultText?: string, params?: Record<string, string | number>) => string;
+  translateText: (text: string | undefined | null) => string;
   formatNumber: (num: number, options?: Intl.NumberFormatOptions) => string;
   supportedLanguages: LanguageOption[];
 }
@@ -92,10 +94,38 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [language, dir, isRTL]);
 
+  const translateText = useCallback(
+    (text: string | undefined | null): string => {
+      if (!text) return "";
+      if (language === "ur") {
+        return translateTextToUrdu(text);
+      }
+      return String(text);
+    },
+    [language]
+  );
+
   const t = useCallback(
     (path: string, defaultText?: string, params?: Record<string, string | number>): string => {
       const dict = dictionaries[language];
       let value = getNestedValue(dict, path);
+
+      // In Urdu mode, check if we have an explicit Urdu dictionary entry
+      if (value === undefined && language === "ur") {
+        // First check if defaultText or path maps to Urdu in the agricultural dictionary
+        if (defaultText) {
+          const dictTranslation = translateTextToUrdu(defaultText);
+          if (dictTranslation && dictTranslation !== defaultText) {
+            value = dictTranslation;
+          }
+        }
+        if (value === undefined) {
+          const pathTranslation = translateTextToUrdu(path);
+          if (pathTranslation && pathTranslation !== path) {
+            value = pathTranslation;
+          }
+        }
+      }
 
       // Fallback to English if missing in active language
       if (value === undefined && language !== "en") {
@@ -105,10 +135,19 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       // If still not found, use defaultText or the last segment of the path
       let result = value !== undefined ? value : defaultText !== undefined ? defaultText : path.split(".").pop() || path;
 
+      if (language === "ur" && typeof result === "string") {
+        // If result is still English, try translating it
+        const possibleTranslation = translateTextToUrdu(result);
+        if (possibleTranslation) {
+          result = possibleTranslation;
+        }
+      }
+
       // Replace interpolation params like {name}, {count}, {temp}
       if (params && typeof result === "string") {
         Object.entries(params).forEach(([k, v]) => {
-          result = (result as string).replace(new RegExp(`\\{${k}\\}`, "g"), String(v));
+          const paramValue = language === "ur" ? translateTextToUrdu(String(v)) : String(v);
+          result = (result as string).replace(new RegExp(`\\{${k}\\}`, "g"), paramValue);
         });
       }
 
@@ -136,10 +175,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       dir,
       isRTL,
       t,
+      translateText,
       formatNumber,
       supportedLanguages: SUPPORTED_LANGUAGES,
     }),
-    [language, setLanguage, dir, isRTL, t, formatNumber]
+    [language, setLanguage, dir, isRTL, t, translateText, formatNumber]
   );
 
   return <LanguageContext.Provider value={contextValue}>{children}</LanguageContext.Provider>;

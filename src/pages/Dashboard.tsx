@@ -1,6 +1,7 @@
 import React from "react";
 import { useFarm } from "../context/FarmContext";
 import { useTranslation } from "../i18n/LanguageContext";
+import { CropSenseLogo } from "../components/common/CropSenseLogo";
 import {
   Sprout,
   ScanLine,
@@ -34,7 +35,7 @@ export const Dashboard: React.FC = () => {
     formatArea,
     setSelectedCropForDetail,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, translateText, isRTL } = useTranslation();
 
   const unreadAlerts = alerts.filter((a) => !a.dismissed);
   const totalAcreage = crops.reduce((acc, c) => acc + c.fieldSize, 0);
@@ -56,6 +57,38 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
+      {/* BRAND & FARM OVERVIEW BANNER */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5 sm:gap-4">
+          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white border border-slate-200 p-1 shadow-2xs shrink-0 flex items-center justify-center overflow-hidden">
+            <CropSenseLogo size={56} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h2 className="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">
+                {farm.name}
+              </h2>
+              <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+                CropSense AI
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {farm.location} • {crops.length} {t("dashboard.fieldsCount", "Fields")} ({totalAcreage.toFixed(1)} {farm.areaUnit === "hectares" ? t("common.hectares", "ha") : t("common.acres", "ac")})
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <button
+            onClick={() => setActiveTab("Scanner")}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-xs transition-colors"
+          >
+            <ScanLine className="w-4 h-4" />
+            <span>{t("nav.scanner", "Diagnose Crop")}</span>
+          </button>
+        </div>
+      </div>
+
       {/* 1. TOP METRIC CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {/* Card 1: Crop Status */}
@@ -207,34 +240,34 @@ export const Dashboard: React.FC = () => {
           <div className="p-6 flex-1 flex flex-col justify-between space-y-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
-                <span className="text-[10px] uppercase font-bold text-slate-400">Canopy Vigor</span>
-                <p className="text-lg font-bold text-emerald-800 mt-0.5">88% NDVI</p>
-                <span className="text-[10px] text-emerald-600 font-medium">+4% from last week</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400">{t("dashboard.canopyVigor", "Canopy Vigor")}</span>
+                <p className="text-lg font-bold text-emerald-800 mt-0.5">{t("dashboard.ndviVal", "88% NDVI")}</p>
+                <span className="text-[10px] text-emerald-600 font-medium">{t("dashboard.ndviChange", "+4% from last week")}</span>
               </div>
 
               <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
-                <span className="text-[10px] uppercase font-bold text-slate-400">Soil Moisture Avg</span>
-                <p className="text-lg font-bold text-cyan-800 mt-0.5">72% Field Cap.</p>
-                <span className="text-[10px] text-slate-500">Root zone buffered</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400">{t("dashboard.soilMoistureAvg", "Soil Moisture Avg")}</span>
+                <p className="text-lg font-bold text-cyan-800 mt-0.5">{t("dashboard.fieldCapVal", "72% Field Cap.")}</p>
+                <span className="text-[10px] text-slate-500">{t("dashboard.rootZoneBuffered", "Root zone buffered")}</span>
               </div>
 
               <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
-                <span className="text-[10px] uppercase font-bold text-slate-400">Est. Biomass</span>
-                <p className="text-lg font-bold text-slate-800 mt-0.5">3.8 t/ha</p>
-                <span className="text-[10px] text-emerald-600 font-medium">On track</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400">{t("dashboard.estBiomass", "Est. Biomass")}</span>
+                <p className="text-lg font-bold text-slate-800 mt-0.5">{t("dashboard.biomassVal", "3.8 t/ha")}</p>
+                <span className="text-[10px] text-emerald-600 font-medium">{t("dashboard.onTrack", "On track")}</span>
               </div>
 
               <div className="p-3 bg-slate-50 border border-slate-100 rounded-lg">
-                <span className="text-[10px] uppercase font-bold text-slate-400">Disease Threat</span>
-                <p className="text-lg font-bold text-amber-700 mt-0.5">Moderate</p>
-                <span className="text-[10px] text-slate-500">High humidity risk</span>
+                <span className="text-[10px] uppercase font-bold text-slate-400">{t("dashboard.diseaseThreat", "Disease Threat")}</span>
+                <p className="text-lg font-bold text-amber-700 mt-0.5">{translateText("Moderate")}</p>
+                <span className="text-[10px] text-slate-500">{t("dashboard.humidityRisk", "High humidity risk")}</span>
               </div>
             </div>
 
             {/* Visual Bar Distribution for Fields */}
             <div className="space-y-3">
               <span className="text-xs font-semibold text-slate-700 block">
-                Field Health & Moisture Distribution
+                {t("dashboard.fieldHealthDistribution", "Field Health & Moisture Distribution")}
               </span>
               <div className="space-y-2">
                 {crops.slice(0, 4).map((crop) => {
@@ -250,8 +283,8 @@ export const Dashboard: React.FC = () => {
                   return (
                     <div key={crop.id} className="space-y-1">
                       <div className="flex justify-between text-xs font-medium">
-                        <span className="text-slate-700 font-semibold">{crop.cropName} ({crop.fieldName})</span>
-                        <span className="text-slate-500">{crop.growthStage} • {crop.soilType}</span>
+                        <span className="text-slate-700 font-semibold">{translateText(crop.cropName)} ({crop.fieldName})</span>
+                        <span className="text-slate-500">{translateText(crop.growthStage)} • {translateText(crop.soilType)}</span>
                       </div>
                       <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
                         <div
@@ -285,7 +318,7 @@ export const Dashboard: React.FC = () => {
                 <ScanLine className="w-8 h-8 text-slate-300 mx-auto" />
                 <p className="text-xs font-medium text-slate-600">{t("dashboard.noScans", "No AI scans performed yet")}</p>
                 <p className="text-[11px] text-slate-400 max-w-[200px] mx-auto">
-                  Take a photo of crop leaves to detect diseases and nutrient deficiencies.
+                  {t("dashboard.scanLeavesDesc", "Take a photo of crop leaves to detect diseases and nutrient deficiencies.")}
                 </p>
                 <button
                   onClick={() => setActiveTab("Crop Scanner")}
@@ -322,18 +355,18 @@ export const Dashboard: React.FC = () => {
                     <div className="min-w-0 pr-2">
                       <div className="flex items-center gap-1.5">
                         <span className="font-semibold text-xs text-slate-900 truncate">
-                          {scan.cropType}
+                          {translateText(scan.cropType)}
                         </span>
                         <span
                           className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full ${
                             isHealthy ? "bg-emerald-100 text-emerald-800" : "bg-rose-100 text-rose-800"
                           }`}
                         >
-                          {isHealthy ? "Healthy" : "Infection"}
+                          {isHealthy ? t("common.healthy", "Healthy") : t("common.infection", "Infection")}
                         </span>
                       </div>
                       <p className="text-[11px] text-slate-500 truncate mt-0.5">
-                        {conditionName}
+                        {translateText(conditionName)}
                       </p>
                     </div>
                     <div className="text-right shrink-0">
@@ -402,7 +435,7 @@ export const Dashboard: React.FC = () => {
                     <td className="px-6 py-4 font-medium text-slate-900">
                       <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                        <span>{crop.cropName}</span>
+                        <span>{translateText(crop.cropName)}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4 text-slate-500">
@@ -410,10 +443,10 @@ export const Dashboard: React.FC = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span className="px-2 py-1 bg-emerald-50 text-emerald-700 rounded text-[11px] font-medium border border-emerald-100">
-                        {crop.growthStage}
+                        {translateText(crop.growthStage)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-slate-500">{crop.soilType}</td>
+                    <td className="px-6 py-4 text-slate-500">{translateText(crop.soilType)}</td>
                     <td className="px-6 py-4 text-slate-500">{crop.lastIrrigationDate || t("crops.notRecorded", "Not recorded")}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">

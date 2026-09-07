@@ -43,7 +43,7 @@ export const Weather: React.FC = () => {
     setTempUnit,
     formatTemp,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, isRTL, translateText } = useTranslation();
 
   const current = weather?.current;
   const metrics = weather?.agriculturalMetrics;
@@ -169,7 +169,7 @@ export const Weather: React.FC = () => {
                   </div>
                   <div className="flex items-center gap-2 pt-0.5">
                     <span className="text-sm font-bold text-slate-800">
-                      {current?.weatherDescription || "Clear Sky"}
+                      {translateText(current?.weatherDescription || "Clear Sky")}
                     </span>
                     <span className="text-xs text-slate-400 font-mono">
                       (WMO {current?.weatherCode})
@@ -248,7 +248,7 @@ export const Weather: React.FC = () => {
                         : "bg-rose-100 text-rose-800"
                     }`}
                   >
-                    Spray Quality: {metrics?.sprayingWindowQuality || "Good"}
+                    {t("weather.sprayQuality", "Spray Quality")}: {translateText(metrics?.sprayingWindowQuality || "Good")}
                   </span>
                 </div>
 
@@ -258,30 +258,30 @@ export const Weather: React.FC = () => {
                     <span>{t("weather.sprayWindow", "Chemical Application Window")}</span>
                   </h3>
                   <p className="text-xs text-emerald-900 leading-relaxed">
-                    {metrics?.sprayRecommendation ||
-                      "Favorable spraying conditions. Low wind speed prevents chemical drift."}
+                    {translateText(metrics?.sprayRecommendation ||
+                      "Favorable spraying conditions. Low wind speed prevents chemical drift.")}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-slate-500 block text-[11px]">Growing Degree Days (GDD)</span>
+                    <span className="text-slate-500 block text-[11px]">{t("weather.gddTitle", "Growing Degree Days (GDD)")}</span>
                     <span className="font-bold text-slate-900 text-sm">
-                      {metrics?.gddToday || 0} units (Base 10°C)
+                      {metrics?.gddToday || 0} {t("weather.unitsBase10", "units (Base 10°C)")}
                     </span>
                   </div>
                   <div className="p-3 rounded-lg bg-slate-50 border border-slate-200">
-                    <span className="text-slate-500 block text-[11px]">Field Soil Trafficability</span>
+                    <span className="text-slate-500 block text-[11px]">{t("weather.soilTrafficability", "Field Soil Trafficability")}</span>
                     <span className="font-bold text-slate-900 text-sm">
-                      {metrics?.fieldWorkability || "Favorable"}
+                      {translateText(metrics?.fieldWorkability || "Favorable")}
                     </span>
                   </div>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                <span>Surface Pressure: {current?.surfacePressure || 1013} hPa</span>
-                <span>Cloud Cover: {current?.cloudCover || 20}%</span>
+                <span>{t("weather.surfacePressure", "Surface Pressure")}: {current?.surfacePressure || 1013} hPa</span>
+                <span>{t("weather.cloudCover", "Cloud Cover")}: {current?.cloudCover || 20}%</span>
               </div>
             </div>
           </div>
@@ -406,7 +406,7 @@ export const Weather: React.FC = () => {
                       </div>
 
                       <p className="text-[11px] text-slate-600 line-clamp-2 leading-tight">
-                        {day.description}
+                        {translateText(day.description)}
                       </p>
                     </div>
 

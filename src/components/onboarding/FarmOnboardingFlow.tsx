@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFarm } from "../../context/FarmContext";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { LanguageSwitcher } from "../common/LanguageSwitcher";
+import { CropSenseLogo } from "../common/CropSenseLogo";
 import { SoilType, GrowthStage, CropHealthStatus } from "../../types";
 import { CROP_OPTIONS } from "../../data/cropProfiles";
 import {
@@ -212,12 +213,12 @@ export const FarmOnboardingFlow: React.FC = () => {
         <div className="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-6 shadow-xl backdrop-blur-md">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold shadow-md shadow-emerald-900/30 shrink-0">
-                <Sprout className="w-6 h-6" />
+              <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-0.5 shadow-md shrink-0 overflow-hidden">
+                <CropSenseLogo size={44} />
               </div>
               <div>
                 <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-                  {t("common.appName", "CropSense AI")}
+                  CropSense AI
                 </h1>
                 <p className="text-xs text-slate-400">
                   {step === 1 ? t("onboarding.step1Title", "Farm Profile & Geographic Calibration") : t("onboarding.step2Title", "Register Initial Crop Parcels")}

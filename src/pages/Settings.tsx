@@ -93,7 +93,7 @@ export const Settings: React.FC = () => {
     isDemoMode,
     logOut,
   } = useFarm();
-  const { t, language, setLanguage, isRTL } = useTranslation();
+  const { t, language, setLanguage, isRTL, translateText } = useTranslation();
 
   const [formData, setFormData] = useState<FarmProfile>({ ...farm });
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -390,7 +390,7 @@ export const Settings: React.FC = () => {
                     <span className="truncate">{fItem.location}</span>
                   </p>
                   <p className="text-[11px] text-slate-500 font-mono mt-1">
-                    {fItem.latitude.toFixed(4)}°, {fItem.longitude.toFixed(4)}° • {fItem.primarySoilType}
+                    {fItem.latitude.toFixed(4)}°, {fItem.longitude.toFixed(4)}° • {translateText(fItem.primarySoilType)}
                   </p>
                 </div>
 
@@ -513,7 +513,7 @@ export const Settings: React.FC = () => {
                 >
                   <p className="text-xs font-semibold text-slate-800 truncate">{preset.name}</p>
                   <p className="text-[10px] text-slate-500 font-mono mt-0.5">
-                    {preset.lat.toFixed(2)}°N, {preset.lon.toFixed(2)}°W • {preset.soil}
+                    {preset.lat.toFixed(2)}°N, {preset.lon.toFixed(2)}°W • {translateText(preset.soil)}
                   </p>
                 </button>
               ))}

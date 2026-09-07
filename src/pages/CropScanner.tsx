@@ -102,7 +102,7 @@ export const CropScanner: React.FC = () => {
     setSelectedCropForScan,
     farm,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, translateText, isRTL } = useTranslation();
 
   const [selectedCropName, setSelectedCropName] = useState<string>(
     selectedCropForScan?.cropName || (crops[0] ? crops[0].cropName : "Tomato")
@@ -514,7 +514,7 @@ export const CropScanner: React.FC = () => {
                     title="Flip camera"
                   >
                     <SwitchCamera className="w-4 h-4" />
-                    <span>Flip</span>
+                    <span>{t("scanner.flip", "Flip")}</span>
                   </button>
 
                   <button
@@ -523,7 +523,7 @@ export const CropScanner: React.FC = () => {
                     className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-white text-xs flex items-center gap-2 shadow-lg shadow-emerald-900/50 active:scale-95 transition-all"
                   >
                     <Camera className="w-4 h-4" />
-                    <span>Capture Photo</span>
+                    <span>{t("scanner.capturePhoto", "Capture Photo")}</span>
                   </button>
 
                   <button
@@ -531,7 +531,7 @@ export const CropScanner: React.FC = () => {
                     onClick={stopLiveCamera}
                     className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold"
                   >
-                    Cancel
+                    {t("common.cancel", "Cancel")}
                   </button>
                 </div>
               </div>
@@ -567,18 +567,18 @@ export const CropScanner: React.FC = () => {
                 <optgroup label={t("nav.myCrops", "My Farm Crops")}>
                   {crops.map((c) => (
                     <option key={c.id} value={c.cropName}>
-                      {c.cropName} ({c.fieldName})
+                      {translateText(c.cropName)} ({c.fieldName})
                     </option>
                   ))}
                 </optgroup>
-                <optgroup label="Standard Crop Options">
-                  <option value="Tomato">Tomato</option>
-                  <option value="Wheat">Wheat</option>
-                  <option value="Rice">Rice</option>
-                  <option value="Maize">Maize (Corn)</option>
-                  <option value="Potato">Potato</option>
-                  <option value="Cucumber">Cucumber</option>
-                  <option value="Chili">Chili (Pepper)</option>
+                <optgroup label={t("scanner.standardOptions", "Standard Crop Options")}>
+                  <option value="Tomato">{translateText("Tomato")}</option>
+                  <option value="Wheat">{translateText("Wheat")}</option>
+                  <option value="Rice">{translateText("Rice")}</option>
+                  <option value="Maize">{translateText("Maize (Corn)")}</option>
+                  <option value="Potato">{translateText("Potato")}</option>
+                  <option value="Cucumber">{translateText("Cucumber")}</option>
+                  <option value="Chili">{translateText("Chili (Pepper)")}</option>
                 </optgroup>
               </select>
             </div>
@@ -591,12 +591,12 @@ export const CropScanner: React.FC = () => {
                 onChange={(e) => setSelectedStage(e.target.value as GrowthStage)}
                 className="w-full text-xs font-medium bg-slate-50 border border-slate-300 rounded-lg px-3 py-2.5 text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none"
               >
-                <option value="Germination">Germination / Seedling</option>
-                <option value="Vegetative">Vegetative (Active Foliage)</option>
-                <option value="Flowering">Flowering / Tasseling</option>
-                <option value="Fruit Development">Fruit / Grain Development</option>
-                <option value="Ripening">Ripening / Maturing</option>
-                <option value="Maturity / Harvest">Maturity / Harvest Ready</option>
+                <option value="Germination">{translateText("Germination / Seedling")}</option>
+                <option value="Vegetative">{translateText("Vegetative (Active Foliage)")}</option>
+                <option value="Flowering">{translateText("Flowering / Tasseling")}</option>
+                <option value="Fruit Development">{translateText("Fruit / Grain Development")}</option>
+                <option value="Ripening">{translateText("Ripening / Maturing")}</option>
+                <option value="Maturity / Harvest">{translateText("Maturity / Harvest Ready")}</option>
               </select>
             </div>
 
@@ -777,7 +777,7 @@ export const CropScanner: React.FC = () => {
                 <div>
                   <span className="font-semibold text-slate-900 block">{t("scanner.lightingTip", "Use good lighting")}</span>
                   <span className="text-[11px] text-slate-500 leading-tight">
-                    Natural daylight; avoid harsh shadows or dark backlighting.
+                    {t("scanner.lightingDesc", "Natural daylight; avoid harsh shadows or dark backlighting.")}
                   </span>
                 </div>
               </div>
@@ -787,7 +787,7 @@ export const CropScanner: React.FC = () => {
                 <div>
                   <span className="font-semibold text-slate-900 block">{t("scanner.focusTip", "Keep the crop in focus")}</span>
                   <span className="text-[11px] text-slate-500 leading-tight">
-                    Hold camera 15–30 cm away and tap screen on the leaf blade.
+                    {t("scanner.focusDesc", "Hold camera 15–30 cm away and tap screen on the leaf blade.")}
                   </span>
                 </div>
               </div>
@@ -797,7 +797,7 @@ export const CropScanner: React.FC = () => {
                 <div>
                   <span className="font-semibold text-slate-900 block">{t("scanner.blurTip", "Avoid blur")}</span>
                   <span className="text-[11px] text-slate-500 leading-tight">
-                    Hold phone steady and keep wind from moving foliage.
+                    {t("scanner.blurDesc", "Hold phone steady and keep wind from moving foliage.")}
                   </span>
                 </div>
               </div>
@@ -807,7 +807,7 @@ export const CropScanner: React.FC = () => {
                 <div>
                   <span className="font-semibold text-slate-900 block">{t("scanner.symptomTip", "Clearly show visible symptoms")}</span>
                   <span className="text-[11px] text-slate-500 leading-tight">
-                    Capture discolored margins, pustules, or wilting spots.
+                    {t("scanner.symptomDesc", "Capture discolored margins, pustules, or wilting spots.")}
                   </span>
                 </div>
               </div>
@@ -820,7 +820,7 @@ export const CropScanner: React.FC = () => {
               <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 {t("scanner.demoLibrary", "Demo Specimen Library")}
               </span>
-              <span className="text-[10px] text-slate-400">Click to preview</span>
+              <span className="text-[10px] text-slate-400">{t("scanner.clickToPreview", "Click to preview")}</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {sampleSpecimens.map((s) => (
@@ -831,10 +831,10 @@ export const CropScanner: React.FC = () => {
                   className="p-2 rounded-lg border border-slate-200 hover:border-emerald-300 bg-slate-50 hover:bg-emerald-50/40 text-left transition-all text-xs group"
                 >
                   <p className="font-semibold text-slate-800 group-hover:text-emerald-800 truncate text-[11px]">
-                    {s.crop}
+                    {translateText(s.crop)}
                   </p>
                   <p className="text-[10px] text-slate-500 truncate mt-0.5">
-                    {s.hint}
+                    {translateText(s.hint)}
                   </p>
                 </button>
               ))}
@@ -902,7 +902,7 @@ export const CropScanner: React.FC = () => {
                           : "bg-rose-50 text-rose-700 border-rose-200"
                       }`}
                     >
-                      {currentResult.severity} {t("common.severity", "Severity")}
+                      {translateText(currentResult.severity)} {t("common.severity", "Severity")}
                     </span>
 
                     {/* Confidence Badge */}
@@ -910,7 +910,7 @@ export const CropScanner: React.FC = () => {
                       {isRTL ? "اعتماد" : "Confidence"}:{" "}
                       <strong className="text-slate-900 capitalize">
                         {currentResult.confidenceLevel
-                          ? `${currentResult.confidenceLevel} (${currentResult.confidence}%)`
+                          ? `${translateText(currentResult.confidenceLevel)} (${currentResult.confidence}%)`
                           : `${currentResult.confidence}%`}
                       </strong>
                     </span>
@@ -918,25 +918,27 @@ export const CropScanner: React.FC = () => {
 
                   {/* Possible Condition Name */}
                   <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-                    {currentResult.possible_condition ||
+                    {translateText(
+                      currentResult.possible_condition ||
                       currentResult.possibleCondition ||
-                      currentResult.diagnosis}
+                      currentResult.diagnosis || ""
+                    )}
                   </h2>
 
                   <p className="text-xs text-slate-600">
                     {t("crops.cropName", "Crop")}:{" "}
                     <strong className="text-slate-900">
-                      {currentResult.crop_type || currentResult.cropType}
+                      {translateText(currentResult.crop_type || currentResult.cropType || "")}
                     </strong>
                     {currentResult.pathogenType && (
-                      <span> • {currentResult.pathogenType}</span>
+                      <span> • {translateText(currentResult.pathogenType)}</span>
                     )}
                   </p>
                 </div>
 
                 <div className="sm:text-right shrink-0 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
                   <span className="text-[10px] font-bold text-slate-400 block uppercase">
-                    Action Urgency
+                    {t("scanner.actionUrgency", "Action Urgency")}
                   </span>
                   <span
                     className={`text-xs font-bold ${
@@ -947,7 +949,7 @@ export const CropScanner: React.FC = () => {
                         : "text-emerald-700"
                     }`}
                   >
-                    {currentResult.urgency || "Routine"}
+                    {translateText(currentResult.urgency || "Routine")}
                   </span>
                 </div>
               </div>
@@ -976,8 +978,8 @@ export const CropScanner: React.FC = () => {
                 <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-start gap-2.5">
                   <Leaf className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold text-slate-900">Canopy Status: </span>
-                    <span>{currentResult.stageAssessment}</span>
+                    <span className="font-semibold text-slate-900">{t("scanner.canopyStatus", "Canopy Status")}: </span>
+                    <span>{translateText(currentResult.stageAssessment)}</span>
                   </div>
                 </div>
               )}
@@ -999,7 +1001,7 @@ export const CropScanner: React.FC = () => {
                   ).map((s, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-xs text-slate-700">
                       <span className="text-emerald-600 font-bold">•</span>
-                      <span>{s}</span>
+                      <span>{translateText(s)}</span>
                     </div>
                   ))}
                 </div>
@@ -1025,7 +1027,7 @@ export const CropScanner: React.FC = () => {
                   ).map((step, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-xs text-emerald-950">
                       <Check className="w-3.5 h-3.5 text-emerald-700 shrink-0 mt-0.5" />
-                      <span>{step}</span>
+                      <span>{translateText(step)}</span>
                     </div>
                   ))}
                 </div>
@@ -1041,7 +1043,7 @@ export const CropScanner: React.FC = () => {
                     </span>
                   </h3>
                   <div className="p-3.5 bg-blue-50/60 border border-blue-200/80 rounded-xl text-xs text-blue-950">
-                    <p className="leading-relaxed">{currentResult.when_to_seek_expert_help}</p>
+                    <p className="leading-relaxed">{translateText(currentResult.when_to_seek_expert_help)}</p>
                   </div>
                 </div>
               )}
@@ -1054,8 +1056,10 @@ export const CropScanner: React.FC = () => {
                     <span>{t("scanner.limitationsTitle", "Assessment Limitations & Scope")}</span>
                   </div>
                   <p className="text-[11px] leading-relaxed text-amber-900/90">
-                    {currentResult.limitations ||
-                      "This visual assessment is an AI-based preliminary evaluation based on photographic features. Photographic analysis cannot verify microscopic fungal spores, latent bacterial vascular infections, or sub-surface root nematodes. Always confirm with laboratory assays or field agronomist inspection before applying extensive chemical interventions."}
+                    {translateText(
+                      currentResult.limitations ||
+                      "This visual assessment is an AI-based preliminary evaluation based on photographic features. Photographic analysis cannot verify microscopic fungal spores, latent bacterial vascular infections, or sub-surface root nematodes. Always confirm with laboratory assays or field agronomist inspection before applying extensive chemical interventions."
+                    )}
                   </p>
                 </div>
               </div>
@@ -1085,7 +1089,7 @@ export const CropScanner: React.FC = () => {
                   {t("scanner.scanHistory", "Scan History")} ({scanHistory.length})
                 </h3>
               </div>
-              <span className="text-[10px] text-slate-400">Saved assessments</span>
+              <span className="text-[10px] text-slate-400">{t("scanner.savedAssessments", "Saved assessments")}</span>
             </div>
 
             {scanHistory.length === 0 ? (
@@ -1102,7 +1106,7 @@ export const CropScanner: React.FC = () => {
                     <div className="space-y-0.5 truncate flex-1">
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-slate-900 truncate">
-                          {s.cropType}
+                          {translateText(s.cropType)}
                         </span>
                         <span
                           className={`text-[9px] font-bold px-1.5 py-0.2 rounded-full border ${
@@ -1115,7 +1119,7 @@ export const CropScanner: React.FC = () => {
                               : "bg-rose-50 text-rose-700 border-rose-200"
                           }`}
                         >
-                          {s.severity}
+                          {translateText(s.severity)}
                         </span>
                         <span className="text-[10px] text-slate-400">
                           {new Date(s.timestamp).toLocaleDateString()}
@@ -1123,8 +1127,8 @@ export const CropScanner: React.FC = () => {
                       </div>
                       <p className="text-slate-600 font-medium truncate text-[11px]">
                         {s.possibleCondition
-                          ? `Possible condition: ${s.possibleCondition}`
-                          : s.diagnosis}
+                          ? `${t("scanner.possibleCondition", "Possible condition")}: ${translateText(s.possibleCondition)}`
+                          : translateText(s.diagnosis || "")}
                       </p>
                     </div>
 

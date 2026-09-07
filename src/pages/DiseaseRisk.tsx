@@ -26,7 +26,7 @@ export const DiseaseRisk: React.FC = () => {
     setActiveTab,
     openScannerWithCrop,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, translateText, isRTL } = useTranslation();
 
   const [filterCrop, setFilterCrop] = useState<string>("all");
 
@@ -123,7 +123,7 @@ export const DiseaseRisk: React.FC = () => {
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-emerald-700">
-              {weather?.agriculturalMetrics.sprayingWindowQuality || "Good"}
+              {translateText(weather?.agriculturalMetrics.sprayingWindowQuality || "Good")}
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-2">
@@ -147,13 +147,13 @@ export const DiseaseRisk: React.FC = () => {
           <option value="all">{t("crops.allCrops", "All Registered Crops")}</option>
           {crops.map((c) => (
             <option key={c.id} value={c.cropName}>
-              {c.cropName}
+              {translateText(c.cropName)}
             </option>
           ))}
-          <option value="Tomato">Tomatoes</option>
-          <option value="Potato">Potatoes</option>
-          <option value="Corn">Corn</option>
-          <option value="Wheat">Wheat</option>
+          <option value="Tomato">{translateText("Tomato")}</option>
+          <option value="Potato">{translateText("Potato")}</option>
+          <option value="Corn">{translateText("Corn")}</option>
+          <option value="Wheat">{translateText("Wheat")}</option>
         </select>
       </div>
 
@@ -191,13 +191,13 @@ export const DiseaseRisk: React.FC = () => {
                           : "bg-emerald-100 text-emerald-800"
                       }`}
                     >
-                      {item.riskLevel} {t("disease.risk", "Risk")} ({item.riskScore}%)
+                      {translateText(item.riskLevel)} {t("disease.risk", "Risk")} ({item.riskScore}%)
                     </span>
                     <span className="text-xs text-slate-500 font-medium">
-                      {t("disease.pathogen", "Pathogen")}: <strong className="text-slate-700">{item.pathogenType}</strong>
+                      {t("disease.pathogen", "Pathogen")}: <strong className="text-slate-700">{translateText(item.pathogenType)}</strong>
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-900">{item.diseaseName}</h3>
+                  <h3 className="text-lg font-bold text-slate-900">{translateText(item.diseaseName)}</h3>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -231,12 +231,12 @@ export const DiseaseRisk: React.FC = () => {
                         key={idx}
                         className="px-2 py-0.5 rounded-md bg-white border border-slate-200 font-medium text-slate-700"
                       >
-                        {c}
+                        {translateText(c)}
                       </span>
                     ))}
                   </div>
                   <p className="text-slate-500 text-[11px] pt-1">
-                    {t("disease.favorable", "Favorable")}: {item.favorableConditions}
+                    {t("disease.favorable", "Favorable")}: {translateText(item.favorableConditions)}
                   </p>
                 </div>
 
@@ -245,7 +245,7 @@ export const DiseaseRisk: React.FC = () => {
                     {t("disease.currentTrigger", "Current Atmospheric Trigger")}
                   </span>
                   <p className="text-slate-700 font-medium leading-relaxed">
-                    {item.currentTrigger}
+                    {translateText(item.currentTrigger)}
                   </p>
                 </div>
               </div>
@@ -259,7 +259,7 @@ export const DiseaseRisk: React.FC = () => {
                   </span>
                 </div>
                 <p className="text-xs text-emerald-900 leading-relaxed">
-                  {item.recommendedAction}
+                  {translateText(item.recommendedAction)}
                 </p>
               </div>
             </div>

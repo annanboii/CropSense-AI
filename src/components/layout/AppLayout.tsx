@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useFarm } from "../../context/FarmContext";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { LanguageSwitcher } from "../common/LanguageSwitcher";
+import { CropSenseLogo } from "../common/CropSenseLogo";
 import { normalizeTab } from "../../utils/navigation";
 import {
   LayoutDashboard,
@@ -122,15 +123,15 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
         className="hidden md:flex flex-col w-64 bg-white border-r border-slate-200 shrink-0 h-screen sticky top-0 z-30 select-none"
       >
         {/* Brand Header */}
-        <div className="p-5 flex items-center gap-3 border-b border-slate-100">
-          <div className="w-9 h-9 bg-emerald-600 rounded-lg flex items-center justify-center text-white shadow-xs shrink-0">
-            <Sprout className="w-5 h-5 stroke-[2.3]" />
+        <div className="p-4 flex items-center gap-3 border-b border-slate-100 bg-white">
+          <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 p-0.5 shadow-2xs shrink-0 flex items-center justify-center overflow-hidden">
+            <CropSenseLogo size={44} />
           </div>
           <div className="min-w-0">
-            <span className="font-bold text-lg tracking-tight text-emerald-900 block leading-tight truncate">
-              {t("common.appName", "CropSense AI")}
+            <span className="font-bold text-lg tracking-tight text-slate-900 block leading-tight truncate">
+              CropSense AI
             </span>
-            <span className="text-[11px] text-slate-400 font-medium">
+            <span className="text-[11px] text-slate-500 font-medium truncate block">
               {t("common.tagline", "Smart Agronomy")}
             </span>
           </div>
@@ -266,8 +267,8 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
           >
             <Menu className="w-5 h-5" />
           </button>
-          <div className="w-7 h-7 rounded-lg bg-emerald-600 flex items-center justify-center text-white shrink-0">
-            <Sprout className="w-4 h-4" />
+          <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-0.5 flex items-center justify-center shrink-0 overflow-hidden">
+            <CropSenseLogo size={36} />
           </div>
           <span className="font-bold text-slate-900 tracking-tight text-base truncate">
             {getActiveTabTitle()}
@@ -311,13 +312,13 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
         <div className="md:hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex justify-start">
           <div className="w-72 bg-white h-full p-4 flex flex-col shadow-2xl animate-in slide-in-from-left duration-200">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white">
-                  <Sprout className="w-4.5 h-4.5" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center p-0.5 shrink-0 overflow-hidden">
+                  <CropSenseLogo size={40} />
                 </div>
                 <div>
                   <span className="font-bold text-slate-900 text-sm block leading-tight">
-                    {t("common.appName", "CropSense AI")}
+                    CropSense AI
                   </span>
                   <span className="text-[10px] text-slate-400">{farm.name}</span>
                 </div>
@@ -427,6 +428,9 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children })
         <header className="h-18 bg-white border-b border-slate-200 px-6 sm:px-8 hidden md:flex items-center justify-between sticky top-0 z-20">
           {/* Left: Current Page Title */}
           <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 p-0.5 flex items-center justify-center shrink-0 overflow-hidden shadow-2xs">
+              <CropSenseLogo size={36} />
+            </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
               {getActiveTabTitle()}
             </h1>

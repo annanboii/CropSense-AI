@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFarm } from "../../context/FarmContext";
 import { useTranslation } from "../../i18n/LanguageContext";
 import { LanguageSwitcher } from "../common/LanguageSwitcher";
+import { CropSenseLogo } from "../common/CropSenseLogo";
 import {
   Sprout,
   Lock,
@@ -87,12 +88,12 @@ export const AuthPage: React.FC = () => {
 
       <div className="w-full max-w-md mx-auto space-y-6 relative z-10">
         {/* Brand Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-emerald-600 shadow-lg shadow-emerald-900/40 text-white mb-1">
-            <Sprout className="w-8 h-8" />
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-white shadow-2xl p-2 mb-1 border border-slate-200 overflow-hidden mx-auto">
+            <CropSenseLogo size={112} />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            {t("common.appName", "CropSense AI")}
+            CropSense AI
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 max-w-xs mx-auto leading-relaxed">
             {t("auth.taglineSubtitle", "Software-only agronomic intelligence, microclimate disease forecasting, and smart irrigation.")}

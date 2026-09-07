@@ -39,7 +39,7 @@ export const Alerts: React.FC = () => {
     isLoadingWeather,
     weatherError,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, translateText, isRTL } = useTranslation();
 
   const [filterCategory, setFilterCategory] = useState<string>("all");
   const [filterSeverity, setFilterSeverity] = useState<string>("all");
@@ -453,7 +453,7 @@ export const Alerts: React.FC = () => {
                         </span>
 
                         <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
-                          {alert.category}
+                          {translateText(alert.category)}
                         </span>
 
                         {alert.provenance && <ProvenanceBadge source={alert.provenance} size="sm" />}
@@ -470,13 +470,13 @@ export const Alerts: React.FC = () => {
                           !alert.read ? "text-slate-950 font-bold" : "text-slate-800 font-semibold"
                         }`}
                       >
-                        {alert.title}
+                        {translateText(alert.title)}
                       </h2>
 
                       {/* Explanation */}
                       {explanationText && (
                         <div className="text-xs text-slate-600 leading-relaxed">
-                          <p>{explanationText}</p>
+                          <p>{translateText(explanationText)}</p>
                         </div>
                       )}
 
@@ -488,7 +488,7 @@ export const Alerts: React.FC = () => {
                             <span className="font-bold text-emerald-900 block text-[11px] uppercase tracking-wider">
                               {t("alerts.recommendedAction", "Recommended Agronomic Action:")}
                             </span>
-                            <p className="text-slate-700 leading-normal">{alert.recommendedAction}</p>
+                            <p className="text-slate-700 leading-normal">{translateText(alert.recommendedAction)}</p>
                           </div>
                         </div>
                       )}
@@ -502,7 +502,7 @@ export const Alerts: React.FC = () => {
                       className="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-700 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
                       aria-label={`Take action: ${alert.actionLabel || t("alerts.viewAction", "View Details")}`}
                     >
-                      <span>{alert.actionLabel || t("alerts.viewAction", "View Action")}</span>
+                      <span>{alert.actionLabel ? translateText(alert.actionLabel) : t("alerts.viewAction", "View Action")}</span>
                       <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
                     </button>
 

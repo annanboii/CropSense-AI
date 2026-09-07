@@ -38,7 +38,7 @@ export const IrrigationAdvisor: React.FC = () => {
     recalculateAgronomy,
     formatWaterVolume,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, translateText, isRTL } = useTranslation();
 
   const [selectedCropId, setSelectedCropId] = useState<string>(crops[0]?.id || "");
   const [calculatorEfficiency, setCalculatorEfficiency] = useState<number>(85); // 85% drip efficiency
@@ -191,7 +191,7 @@ export const IrrigationAdvisor: React.FC = () => {
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-bold text-base text-slate-900">
-                          {advice.cropName}
+                          {translateText(advice.cropName)}
                         </h3>
                         <span
                           className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -204,11 +204,11 @@ export const IrrigationAdvisor: React.FC = () => {
                               : "bg-cyan-100 text-cyan-800"
                           }`}
                         >
-                          {advice.recommendedAction}
+                          {translateText(advice.recommendedAction)}
                         </span>
                       </div>
                       <p className="text-xs text-slate-500 font-medium">
-                        {t("crops.fieldName", "Field")}: <strong className="text-slate-700">{advice.fieldName}</strong> ({advice.fieldSize} {farm.areaUnit}) • {advice.soilType}
+                        {t("crops.fieldName", "Field")}: <strong className="text-slate-700">{translateText(advice.fieldName)}</strong> ({advice.fieldSize} {translateText(farm.areaUnit)}) • {translateText(advice.soilType)}
                       </p>
                     </div>
 
@@ -264,14 +264,14 @@ export const IrrigationAdvisor: React.FC = () => {
 
                   {/* Agronomic Reasoning */}
                   <p className="text-xs text-slate-600 bg-slate-50/80 p-2.5 rounded-lg border border-slate-200/60 leading-relaxed">
-                    <strong>{t("irrigation.rationale", "Agronomic Rationale")}:</strong> {advice.reasoning}
+                    <strong>{t("irrigation.rationale", "Agronomic Rationale")}:</strong> {translateText(advice.reasoning)}
                   </p>
                 </div>
 
                 {/* Footer Action */}
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs text-slate-500">
-                    {t("irrigation.nextCycle", "Next cycle")}: <strong className="text-slate-800">{advice.nextIrrigationDate}</strong>
+                    {t("irrigation.nextCycle", "Next cycle")}: <strong className="text-slate-800">{translateText(advice.nextIrrigationDate)}</strong>
                   </span>
 
                   <button

@@ -15,7 +15,7 @@ import { Analytics } from "./pages/Analytics";
 import { Alerts } from "./pages/Alerts";
 import { Settings } from "./pages/Settings";
 import { normalizeTab } from "./utils/navigation";
-import { Sprout } from "lucide-react";
+import { CropSenseLogo } from "./components/common/CropSenseLogo";
 
 const MainContent: React.FC = () => {
   const {
@@ -31,8 +31,8 @@ const MainContent: React.FC = () => {
   if (isLoadingAuth) {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-emerald-600 flex items-center justify-center animate-bounce shadow-lg shadow-emerald-900/40">
-          <Sprout className="w-7 h-7" />
+        <div className="w-18 h-18 rounded-2xl bg-white border border-slate-200 flex items-center justify-center p-1 animate-pulse shadow-xl overflow-hidden">
+          <CropSenseLogo size={64} />
         </div>
         <p className="text-sm font-semibold text-slate-300">{t("common.loading", "Loading CropSense AI...")}</p>
       </div>

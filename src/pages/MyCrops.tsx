@@ -46,7 +46,7 @@ export const MyCrops: React.FC = () => {
     selectedCropForDetail,
     setSelectedCropForDetail,
   } = useFarm();
-  const { t, isRTL } = useTranslation();
+  const { t, translateText, isRTL } = useTranslation();
 
   const [activeSubTab, setActiveSubTab] = useState<CropTab>("parcels");
   const [searchTerm, setSearchTerm] = useState("");
@@ -168,7 +168,7 @@ export const MyCrops: React.FC = () => {
               {t("crops.title", "My Crops & Fields")}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              {crops.length} {crops.length === 1 ? "active crop parcel" : "active crop parcels"} across{" "}
+              {crops.length} {crops.length === 1 ? t("crops.activeParcel", "active crop parcel") : t("crops.activeParcels", "active crop parcels")} across{" "}
               {totalRegisteredArea.toFixed(1)}{" "}
               {farm.areaUnit === "hectares" ? t("common.hectares", "ha") : t("common.acres", "acres")}
             </p>
@@ -198,7 +198,7 @@ export const MyCrops: React.FC = () => {
             }`}
           >
             <Sprout className={`w-4 h-4 ${activeSubTab === "parcels" ? "text-emerald-600" : "text-slate-400"}`} />
-            <span>All Crop Parcels ({crops.length})</span>
+            <span>{t("crops.myParcels", "All Crop Parcels")} ({crops.length})</span>
           </button>
 
           <button
@@ -210,7 +210,7 @@ export const MyCrops: React.FC = () => {
             }`}
           >
             <BookOpen className={`w-4 h-4 ${activeSubTab === "encyclopedia" ? "text-emerald-600" : "text-slate-400"}`} />
-            <span>Crop Encyclopedia ({CROP_OPTIONS.length})</span>
+            <span>{t("crops.encyclopedia", "Crop Encyclopedia")} ({CROP_OPTIONS.length})</span>
           </button>
 
           <button
@@ -222,7 +222,7 @@ export const MyCrops: React.FC = () => {
             }`}
           >
             <TrendingUp className={`w-4 h-4 ${activeSubTab === "stages" ? "text-emerald-600" : "text-slate-400"}`} />
-            <span>Growth Stages</span>
+            <span>{t("crops.growthStages", "Growth Stages")}</span>
           </button>
 
           <button
@@ -234,7 +234,7 @@ export const MyCrops: React.FC = () => {
             }`}
           >
             <Droplets className={`w-4 h-4 ${activeSubTab === "soil" ? "text-emerald-600" : "text-slate-400"}`} />
-            <span>Soil & Irrigation</span>
+            <span>{t("crops.soilIrrigation", "Soil & Irrigation")}</span>
           </button>
         </div>
 
@@ -245,14 +245,14 @@ export const MyCrops: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-xs font-bold text-slate-600 uppercase tracking-wider">
                 <Sparkles className="w-4 h-4 text-emerald-600" />
-                <span>SUPPORTED CROP PRESETS</span>
+                <span>{t("crops.supportedPresets", "Supported Crop Presets")}</span>
               </div>
 
               <div className="relative">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 rtl:left-auto rtl:right-3" />
                 <input
                   type="text"
-                  placeholder="Search crops..."
+                  placeholder={t("crops.searchPlaceholder", "Search crops...")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full sm:w-64 pl-9 pr-3 rtl:pl-3 rtl:pr-9 py-2 text-xs bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none text-slate-800 transition-colors shadow-2xs"
@@ -270,7 +270,7 @@ export const MyCrops: React.FC = () => {
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 }`}
               >
-                All ({crops.length})
+                {t("common.all", "All")} ({crops.length})
               </button>
 
               {CROP_OPTIONS.map((cropName) => {
@@ -288,7 +288,7 @@ export const MyCrops: React.FC = () => {
                           : "bg-slate-100/90 text-slate-800 border-slate-200/80 hover:bg-slate-200"
                       }`}
                     >
-                      {cropName} ({count})
+                      {translateText(cropName)} ({count})
                     </button>
                   );
                 }
@@ -300,7 +300,7 @@ export const MyCrops: React.FC = () => {
                     className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-50 text-slate-600 border border-slate-200/80 hover:bg-slate-100 hover:text-emerald-700 hover:border-emerald-300 transition-colors"
                     title={`Add ${cropName} parcel`}
                   >
-                    <span>{cropName}</span>
+                    <span>{translateText(cropName)}</span>
                     <Plus className="w-3 h-3 text-slate-400" />
                   </button>
                 );
@@ -360,7 +360,7 @@ export const MyCrops: React.FC = () => {
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
                               <h3 className="font-bold text-base text-slate-900 group-hover:text-emerald-700 transition-colors truncate">
-                                {crop.cropName}
+                                {translateText(crop.cropName)}
                               </h3>
                               <span
                                 className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
@@ -371,11 +371,11 @@ export const MyCrops: React.FC = () => {
                                     : "bg-rose-100 text-rose-800"
                                 }`}
                               >
-                                {crop.healthStatus}
+                                {translateText(crop.healthStatus)}
                               </span>
                             </div>
                             <p className="text-xs text-slate-500 font-medium mt-0.5 truncate">
-                              Field: <strong className="text-slate-700">{crop.fieldName}</strong> • {crop.fieldSize}{" "}
+                              {t("crops.fieldName", "Field")}: <strong className="text-slate-700">{translateText(crop.fieldName)}</strong> • {crop.fieldSize}{" "}
                               {farm.areaUnit === "hectares" ? t("common.hectares", "ha") : t("common.acres", "ac")}
                             </p>
                           </div>
@@ -383,7 +383,7 @@ export const MyCrops: React.FC = () => {
                           <div className="flex items-center gap-0.5 shrink-0" onClick={(e) => e.stopPropagation()}>
                             <button
                               onClick={() => handleOpenEditModal(crop)}
-                              title="Edit Crop"
+                              title={t("common.edit", "Edit Crop")}
                               className="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-slate-100 transition-colors"
                               aria-label="Edit crop"
                             >
@@ -391,7 +391,7 @@ export const MyCrops: React.FC = () => {
                             </button>
                             <button
                               onClick={() => setCropToDelete(crop)}
-                              title="Delete Crop"
+                              title={t("common.delete", "Delete Crop")}
                               className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                               aria-label="Delete crop"
                             >
@@ -406,13 +406,13 @@ export const MyCrops: React.FC = () => {
                             <span className="text-slate-400 block text-[10px] uppercase font-bold">
                               {t("crops.soilType", "Soil Type")}
                             </span>
-                            <span className="font-semibold text-slate-800 truncate block">{crop.soilType}</span>
+                            <span className="font-semibold text-slate-800 truncate block">{translateText(crop.soilType)}</span>
                           </div>
                           <div className="p-2 rounded-lg bg-slate-50 border border-slate-200/60">
                             <span className="text-slate-400 block text-[10px] uppercase font-bold">
                               {t("crops.growthStage", "Growth Stage")}
                             </span>
-                            <span className="font-semibold text-emerald-800 truncate block">{crop.growthStage}</span>
+                            <span className="font-semibold text-emerald-800 truncate block">{translateText(crop.growthStage)}</span>
                           </div>
                           <div className="p-2 rounded-lg bg-slate-50 border border-slate-200/60">
                             <span className="text-slate-400 block text-[10px] uppercase font-bold">
@@ -425,7 +425,7 @@ export const MyCrops: React.FC = () => {
                               {t("crops.lastIrrigation", "Last Irrigation")}
                             </span>
                             <span className="font-semibold text-cyan-800 truncate block">
-                              {daysSinceIrr === 0 ? "Today" : `${daysSinceIrr}d ago`}
+                              {daysSinceIrr === 0 ? t("common.today", "Today") : isRTL ? `${daysSinceIrr} دن پہلے` : `${daysSinceIrr}d ago`}
                             </span>
                           </div>
                         </div>
@@ -476,9 +476,9 @@ export const MyCrops: React.FC = () => {
         {activeSubTab === "encyclopedia" && (
           <div className="p-6 space-y-6">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Agronomic Crop Encyclopedia</h3>
+              <h3 className="text-base font-bold text-slate-900">{t("crops.encyclopediaTitle", "Agronomic Crop Encyclopedia")}</h3>
               <p className="text-xs text-slate-500">
-                Detailed optimal thresholds, daily water requirement models, and disease vulnerabilities for major crops.
+                {t("crops.encyclopediaSubtitle", "Detailed optimal thresholds, daily water requirement models, and disease vulnerabilities for major crops.")}
               </p>
             </div>
 
@@ -494,36 +494,36 @@ export const MyCrops: React.FC = () => {
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <h4 className="font-bold text-slate-900 text-base">{profile.name}</h4>
+                        <h4 className="font-bold text-slate-900 text-base">{translateText(profile.name)}</h4>
                         <p className="text-xs italic text-slate-500">{profile.scientificName}</p>
                       </div>
                       <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-semibold">
-                        {profile.category}
+                        {translateText(profile.category)}
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs pt-1">
                       <div className="p-2 rounded-lg bg-white border border-slate-200">
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Optimal Temp</span>
+                        <span className="text-[10px] text-slate-400 uppercase font-bold block">{t("crops.optimalTemp", "Optimal Temp")}</span>
                         <span className="font-semibold text-slate-800">
                           {profile.optimalTempRange.min}–{profile.optimalTempRange.max}
                           {profile.optimalTempRange.unit}
                         </span>
                       </div>
                       <div className="p-2 rounded-lg bg-white border border-slate-200">
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Water / Day</span>
+                        <span className="text-[10px] text-slate-400 uppercase font-bold block">{t("crops.waterPerDay", "Water / Day")}</span>
                         <span className="font-semibold text-cyan-800">
                           {profile.waterRequirementMmPerDay.min}–{profile.waterRequirementMmPerDay.max} mm
                         </span>
                       </div>
                       <div className="p-2 rounded-lg bg-white border border-slate-200">
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Cycle Duration</span>
+                        <span className="text-[10px] text-slate-400 uppercase font-bold block">{t("crops.cycleDuration", "Cycle Duration")}</span>
                         <span className="font-semibold text-slate-800">
-                          {profile.growthDurationDays.min}–{profile.growthDurationDays.max} days
+                          {profile.growthDurationDays.min}–{profile.growthDurationDays.max} {t("weather.days", "days")}
                         </span>
                       </div>
                       <div className="p-2 rounded-lg bg-white border border-slate-200">
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Soil pH Range</span>
+                        <span className="text-[10px] text-slate-400 uppercase font-bold block">{t("crops.soilPhRange", "Soil pH Range")}</span>
                         <span className="font-semibold text-emerald-800">
                           {profile.soilPhRange.min}–{profile.soilPhRange.max}
                         </span>
@@ -531,7 +531,7 @@ export const MyCrops: React.FC = () => {
                     </div>
 
                     <p className="text-xs text-slate-600 bg-emerald-50/60 p-2.5 rounded-lg border border-emerald-100">
-                      <strong>Agronomist Tip:</strong> {profile.tips}
+                      <strong>{t("crops.agronomistTip", "Agronomist Tip")}:</strong> {translateText(profile.tips)}
                     </p>
 
                     <div className="pt-2 flex justify-end">
@@ -539,7 +539,7 @@ export const MyCrops: React.FC = () => {
                         onClick={() => handleOpenAddModal(profile.name)}
                         className="flex items-center gap-1 text-xs font-bold text-emerald-700 hover:text-emerald-800"
                       >
-                        <span>Plant {profile.name}</span>
+                        <span>{t("crops.plantCrop", "Plant")} {translateText(profile.name)}</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -554,9 +554,9 @@ export const MyCrops: React.FC = () => {
         {activeSubTab === "stages" && (
           <div className="p-6 space-y-6">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Growth Stage Management Roadmap</h3>
+              <h3 className="text-base font-bold text-slate-900">{t("crops.stagesRoadmap", "Growth Stage Management Roadmap")}</h3>
               <p className="text-xs text-slate-500">
-                Phase-by-phase development timeline and critical agronomic interventions.
+                {t("crops.stagesSubtitle", "Phase-by-phase development timeline and critical agronomic interventions.")}
               </p>
             </div>
 
@@ -570,10 +570,10 @@ export const MyCrops: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <h4 className="font-bold text-slate-900 text-sm flex items-center gap-2">
                         <Sprout className="w-4 h-4 text-emerald-600" />
-                        <span>{profile.name} Growth Phases</span>
+                        <span>{translateText(profile.name)} {t("crops.growthPhases", "Growth Phases")}</span>
                       </h4>
                       <span className="text-xs text-slate-400">
-                        Total {profile.growthDurationDays.min}–{profile.growthDurationDays.max} days
+                        {t("crops.totalDuration", "Total")} {profile.growthDurationDays.min}–{profile.growthDurationDays.max} {t("weather.days", "days")}
                       </span>
                     </div>
 
@@ -587,12 +587,12 @@ export const MyCrops: React.FC = () => {
                             <span className="w-5 h-5 rounded-full bg-emerald-600 text-white font-bold text-[10px] flex items-center justify-center">
                               {sIdx + 1}
                             </span>
-                            <span className="font-bold text-xs text-slate-800 truncate">{stage.stage}</span>
+                            <span className="font-bold text-xs text-slate-800 truncate">{translateText(stage.stage)}</span>
                           </div>
-                          <p className="text-[11px] text-slate-600">{stage.description}</p>
+                          <p className="text-[11px] text-slate-600">{translateText(stage.description)}</p>
                           <div className="pt-1 border-t border-slate-200/60">
-                            <span className="text-[10px] font-bold text-emerald-700 block uppercase">Key Action:</span>
-                            <span className="text-[11px] text-slate-700">{stage.criticalAction}</span>
+                            <span className="text-[10px] font-bold text-emerald-700 block uppercase">{t("crops.keyAction", "Key Action")}:</span>
+                            <span className="text-[11px] text-slate-700">{translateText(stage.criticalAction)}</span>
                           </div>
                         </div>
                       ))}
@@ -608,39 +608,39 @@ export const MyCrops: React.FC = () => {
         {activeSubTab === "soil" && (
           <div className="p-6 space-y-6">
             <div>
-              <h3 className="text-base font-bold text-slate-900">Soil & Irrigation Suitability Matrix</h3>
+              <h3 className="text-base font-bold text-slate-900">{t("crops.soilSuitabilityMatrix", "Soil & Irrigation Suitability Matrix")}</h3>
               <p className="text-xs text-slate-500">
-                Match crop water demand with soil retention capacity and current farm soil ({farm.primarySoilType}).
+                {t("crops.soilSubtitle", "Match crop water demand with soil retention capacity and current farm soil")} ({translateText(farm.primarySoilType)}).
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-5 rounded-xl bg-emerald-50/50 border border-emerald-200 space-y-2">
-                <h4 className="font-bold text-emerald-900 text-sm">Farm Soil: {farm.primarySoilType}</h4>
+                <h4 className="font-bold text-emerald-900 text-sm">{t("crops.farmSoil", "Farm Soil")}: {translateText(farm.primarySoilType)}</h4>
                 <p className="text-xs text-emerald-800">
-                  Ideal balance of moisture holding capacity and root aeration. Well suited for Solanaceous and Cereal crops.
+                  {translateText("Ideal balance of moisture holding capacity and root aeration. Well suited for Solanaceous and Cereal crops.")}
                 </p>
                 <div className="pt-2 text-[11px] text-emerald-700">
-                  • Available Water Capacity: 1.5–2.0 in/ft<br />
-                  • Drainage Rate: Moderate (0.6–2.0 in/hr)
+                  • {translateText("Available Water Capacity: 1.5–2.0 in/ft")}<br />
+                  • {translateText("Drainage Rate: Moderate (0.6–2.0 in/hr)")}
                 </div>
               </div>
 
               <div className="p-5 rounded-xl bg-cyan-50/50 border border-cyan-200 space-y-2">
-                <h4 className="font-bold text-cyan-900 text-sm">Irrigation Efficiency Guidelines</h4>
+                <h4 className="font-bold text-cyan-900 text-sm">{t("crops.irrigationGuidelines", "Irrigation Efficiency Guidelines")}</h4>
                 <p className="text-xs text-cyan-800">
-                  Drip fertigation delivers 90–95% water efficiency. Water early mornings (05:00–08:30) to eliminate foliage fungal risk.
+                  {translateText("Drip fertigation delivers 90–95% water efficiency. Water early mornings (05:00–08:30) to eliminate foliage fungal risk.")}
                 </p>
                 <div className="pt-2 text-[11px] text-cyan-700">
-                  • Avoid mid-day spray evaporation<br />
-                  • Monitor tensiometer before next cycle
+                  • {translateText("Avoid mid-day spray evaporation")}<br />
+                  • {translateText("Monitor tensiometer before next cycle")}
                 </div>
               </div>
 
               <div className="p-5 rounded-xl bg-amber-50/50 border border-amber-200 space-y-2">
-                <h4 className="font-bold text-amber-900 text-sm">Soil Moisture Buffer</h4>
+                <h4 className="font-bold text-amber-900 text-sm">{t("crops.soilMoistureBuffer", "Soil Moisture Buffer")}</h4>
                 <p className="text-xs text-amber-800">
-                  Keep root zone moisture above 50% field capacity during flowering and fruit setting stages to prevent yield reduction.
+                  {translateText("Keep root zone moisture above 50% field capacity during flowering and fruit setting stages to prevent yield reduction.")}
                 </p>
               </div>
             </div>
@@ -690,14 +690,14 @@ export const MyCrops: React.FC = () => {
                           : "bg-slate-50 text-slate-700 border border-slate-200 hover:border-emerald-300"
                       }`}
                     >
-                      {cOpt}
+                      {translateText(cOpt)}
                     </button>
                   ))}
                 </div>
                 <input
                   type="text"
                   required
-                  placeholder="Or enter crop type..."
+                  placeholder={t("crops.cropTypePlaceholder", "Or enter crop type...")}
                   value={formData.cropName}
                   onChange={(e) => setFormData({ ...formData, cropName: e.target.value })}
                   className="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none"
@@ -713,7 +713,7 @@ export const MyCrops: React.FC = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. North Plot 01"
+                    placeholder={t("crops.plotPlaceholder", "e.g. North Plot 01")}
                     value={formData.fieldName}
                     onChange={(e) => setFormData({ ...formData, fieldName: e.target.value })}
                     className="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none"
@@ -751,12 +751,12 @@ export const MyCrops: React.FC = () => {
                     }
                     className="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none"
                   >
-                    <option value="Germination">Germination</option>
-                    <option value="Vegetative">Vegetative</option>
-                    <option value="Flowering">Flowering</option>
-                    <option value="Fruit Development">Fruit Development</option>
-                    <option value="Ripening">Ripening</option>
-                    <option value="Maturity / Harvest">Maturity / Harvest</option>
+                    <option value="Germination">{translateText("Germination")}</option>
+                    <option value="Vegetative">{translateText("Vegetative")}</option>
+                    <option value="Flowering">{translateText("Flowering")}</option>
+                    <option value="Fruit Development">{translateText("Fruit Development")}</option>
+                    <option value="Ripening">{translateText("Ripening")}</option>
+                    <option value="Maturity / Harvest">{translateText("Maturity / Harvest")}</option>
                   </select>
                 </div>
 
@@ -771,14 +771,14 @@ export const MyCrops: React.FC = () => {
                     }
                     className="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-800 focus:ring-2 focus:ring-emerald-500 focus:bg-white outline-none"
                   >
-                    <option value="Loam">Loam (Optimal)</option>
-                    <option value="Sandy Loam">Sandy Loam</option>
-                    <option value="Clay Loam">Clay Loam</option>
-                    <option value="Clay">Clay</option>
-                    <option value="Sand">Sand</option>
-                    <option value="Silt">Silt</option>
-                    <option value="Peat">Peat</option>
-                    <option value="Chalk">Chalk</option>
+                    <option value="Loam">{translateText("Loam")}</option>
+                    <option value="Sandy Loam">{translateText("Sandy Loam")}</option>
+                    <option value="Clay Loam">{translateText("Clay Loam")}</option>
+                    <option value="Clay">{translateText("Clay")}</option>
+                    <option value="Sand">{translateText("Sand")}</option>
+                    <option value="Silt">{translateText("Silt")}</option>
+                    <option value="Peat">{translateText("Peat")}</option>
+                    <option value="Chalk">{translateText("Chalk")}</option>
                   </select>
                 </div>
               </div>
@@ -821,7 +821,7 @@ export const MyCrops: React.FC = () => {
                   onClick={() => setShowAdvancedFields(!showAdvancedFields)}
                   className="text-xs text-emerald-700 font-semibold flex items-center gap-1 hover:underline"
                 >
-                  <span>{showAdvancedFields ? "Hide Advanced Agronomic Fields" : "+ Add Yield Targets & Field Notes"}</span>
+                  <span>{showAdvancedFields ? t("crops.hideAdvanced", "Hide Advanced Agronomic Fields") : t("crops.addAdvanced", "+ Add Yield Targets & Field Notes")}</span>
                   <ChevronDown
                     className={`w-3.5 h-3.5 transition-transform ${showAdvancedFields ? "rotate-180" : ""}`}
                   />
@@ -832,7 +832,7 @@ export const MyCrops: React.FC = () => {
                 <div className="space-y-3 pt-2 border-t border-slate-100">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-slate-700">Target Yield</label>
+                      <label className="text-xs font-semibold text-slate-700">{t("crops.targetYield", "Target Yield")}</label>
                       <input
                         type="text"
                         placeholder="e.g. 40 tons/acre or 80 bu/acre"
@@ -843,7 +843,7 @@ export const MyCrops: React.FC = () => {
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold text-slate-700">Current Health Status</label>
+                      <label className="text-xs font-semibold text-slate-700">{t("crops.currentHealthStatus", "Current Health Status")}</label>
                       <select
                         value={formData.healthStatus}
                         onChange={(e) =>
@@ -851,15 +851,15 @@ export const MyCrops: React.FC = () => {
                         }
                         className="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-slate-800 focus:ring-2 focus:ring-emerald-500 outline-none"
                       >
-                        <option value="Optimal">Optimal</option>
-                        <option value="Attention">Attention (Monitoring)</option>
-                        <option value="Critical">Critical (Action Required)</option>
+                        <option value="Optimal">{translateText("Optimal")}</option>
+                        <option value="Attention">{translateText("Attention")}</option>
+                        <option value="Critical">{translateText("Critical")}</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-slate-700">Agronomic Notes & Variety Details</label>
+                    <label className="text-xs font-semibold text-slate-700">{t("crops.agronomicNotes", "Agronomic Notes & Variety Details")}</label>
                     <textarea
                       rows={2}
                       placeholder="e.g. Drip irrigation line spacing, hybrid seed batch ID..."
@@ -900,10 +900,9 @@ export const MyCrops: React.FC = () => {
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-base">Remove Crop Parcel?</h3>
+              <h3 className="font-bold text-slate-900 text-base">{t("crops.removeParcelTitle", "Remove Crop Parcel?")}</h3>
               <p className="text-xs text-slate-500 mt-1">
-                Are you sure you want to remove <strong>{cropToDelete.cropName}</strong> (
-                {cropToDelete.fieldName})? Associated irrigation records and scans will remain in your farm history.
+                {t("crops.removeParcelConfirm", "Are you sure you want to remove")} <strong>{translateText(cropToDelete.cropName)}</strong> ({translateText(cropToDelete.fieldName)})? {t("crops.removeParcelKeepHistory", "Associated irrigation records and scans will remain in your farm history.")}
               </p>
             </div>
             <div className="flex items-center justify-end gap-2 pt-2">
@@ -920,7 +919,7 @@ export const MyCrops: React.FC = () => {
                 }}
                 className="px-3.5 py-1.5 rounded-lg bg-rose-600 text-white text-xs font-semibold hover:bg-rose-700 shadow-2xs"
               >
-                Delete Parcel
+                {t("crops.deleteParcel", "Delete Parcel")}
               </button>
             </div>
           </div>
